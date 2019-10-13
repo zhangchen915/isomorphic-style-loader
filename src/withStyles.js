@@ -6,18 +6,17 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
-
-import React from 'react'
-import hoistStatics from 'hoist-non-react-statics'
-
+import { h/** @jsx h */ } from 'preact'
+import { PureComponent, useContext } from 'preact/compat'
 import StyleContext from './StyleContext'
 
 function withStyles(...styles) {
   return function wrapWithStyles(ComposedComponent) {
-    class WithStyles extends React.PureComponent {
-      constructor(props, context) {
-        super(props, context)
-        this.removeCss = context.insertCss(...styles)
+    class WithStyles extends PureComponent {
+      constructor(props) {
+        super(props)
+        const insertCss = useContext(StyleContext)
+        this.removeCss = insertCss(styles)
       }
 
       componentWillUnmount() {
@@ -37,7 +36,7 @@ function withStyles(...styles) {
     WithStyles.contextType = StyleContext
     WithStyles.ComposedComponent = ComposedComponent
 
-    return hoistStatics(WithStyles, ComposedComponent)
+    return WithStyles
   }
 }
 

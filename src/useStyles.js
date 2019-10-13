@@ -7,7 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'preact/compat'
 import StyleContext from './StyleContext'
 
 // To detect if it's in SSR process or in browser. Wrapping with
