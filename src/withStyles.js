@@ -10,34 +10,34 @@ import { h/** @jsx h */ } from 'preact'
 import { PureComponent, useContext } from 'preact/compat'
 import StyleContext from './StyleContext'
 
-function withStyles(...styles) {
-  return function wrapWithStyles(ComposedComponent) {
-    class WithStyles extends PureComponent {
-      constructor(props) {
-        super(props)
-        const insertCss = useContext(StyleContext)
-        this.removeCss = insertCss(styles)
-      }
-
-      componentWillUnmount() {
-        if (this.removeCss) {
-          setTimeout(this.removeCss, 0)
-        }
-      }
-
-      render() {
-        return <ComposedComponent {...this.props} />
-      }
+const withStyles = (...styles) => (ComposedComponent) => {
+  class WithStyles extends PureComponent {
+    constructor(props) {
+      super(props)
+      const insertCss = useContext(StyleContext)
+      this.removeCss = insertCss(styles)
     }
 
-    const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component'
+    componentWillUnmount() {
+      if (this.removeCss) setTimeout(this.removeCss, 0)
+    }
 
-    WithStyles.displayName = `WithStyles(${displayName})`
-    WithStyles.contextType = StyleContext
-    WithStyles.ComposedComponent = ComposedComponent
-
-    return WithStyles
+    render() {
+      return <ComposedComponent {...this.props} />
+    }
   }
+
+  const displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component'
+
+  WithStyles.displayName = `WithStyles(${displayName})`
+  WithStyles.ComposedComponent = ComposedComponent
+
+  Object.getOwnPropertyNames(ComposedComponent)
+    .filter(prop => typeof ComposedComponent[prop] === 'function').forEach(prop => {
+    WithStyles[prop] = ComposedComponent[prop]
+  })
+
+  return WithStyles
 }
 
 export default withStyles

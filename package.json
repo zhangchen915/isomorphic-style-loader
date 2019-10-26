@@ -3,12 +3,9 @@
   "name": "preact-isomorphic-style-loader",
   "version": "0.0.1",
   "description": "CSS style loader for Webpack optimized for critical path CSS rendering and isomoprhic web apps",
-  "repository": "kriasoft/isomorphic-style-loader",
-  "author": "Kriasoft <hello@kriasoft.com> (https://www.kriasoft.com)",
-  "contributors": [
-    "Konstantin Tarkus <hello@tarkus.me> (https://medium.com/@tarkus)",
-    "Vladimir Kutepov"
-  ],
+  "repository": "",
+  "author": "",
+  "contributors": [],
   "license": "MIT",
   "keywords": [
     "webpack",
@@ -21,8 +18,8 @@
     "styles",
     "style-loader",
     "style loader",
-    "react",
-    "reactjs",
+    "preact",
+    "preactX",
     "isomorphic",
     "universal",
     "critical-css",
